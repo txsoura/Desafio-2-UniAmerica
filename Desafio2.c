@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 void menu(),jogar(),pontuacao(),descricao(),desenvolvedor();
-const int maior;
+const int pontuacao;
 const char * jogador;
 
 void main(){
@@ -54,7 +54,7 @@ void jogar(){
 }
 
 void pontuacao(){
-    printf("_______  Pontuacao _______\nNome: %s\nPontos: %d",&jogador,&maior,"\n____________________________\n");
+    printf("_______  Pontuacao _______\nNome: %s\nPontos: %d",&jogador,&pontuacao,"\n____________________________\n");
 }
 
 void descricao(){
