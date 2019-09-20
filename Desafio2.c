@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void menu(),jogar(),pontuacao(),descricao(),desenvolvedor();
 const int maior;
@@ -36,7 +37,10 @@ void menu(){
                     // clrscr();
                     desenvolvedor();
                     break;
-
+                //opcao 5
+                case 5:
+                    exit(0);
+                    break;
                 default:
                     printf("XXXXXXXXXXXXXXXXXXXXXXXXXXX\nOpcao invalida. Selecione de 1 a 5\nXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
                     break;
@@ -50,13 +54,13 @@ void jogar(){
 }
 
 void pontuacao(){
-    printf("***** Jogo da cobrinha *****\n_______  Pontuacao _______\nNome: %s\nPontos: %d",&jogador,&maior,"\n****************************\n");
+    printf("_______  Pontuacao _______\nNome: %s\nPontos: %d",&jogador,&maior,"\n____________________________\n");
 }
 
 void descricao(){
-    printf("***** Jogo da cobrinha *****\n_______  Instrucoes _______\n- O objetivo deste jogo, e alimentar a cobrinha o maximo possivel;\n- Se demorar alimentar, a comida mudara de lugar;\n- Cada comida, vale 1 ponto;\n- Se a sua pontuacao for a maior, ficara salva no jogo com o seu nome;\n- Use as setas direcionais, para jogar;\n- Use a tecla ESC para fechar o jogo;\n- Use a tecla S para voltar ao Menu\n****************************\n");
+    printf("_______  Instrucoes _______\n- O objetivo deste jogo, e alimentar a cobrinha o maximo possivel;\n- Se demorar alimentar, a comida mudara de lugar;\n- Cada comida, vale 1 ponto;\n- Se a sua pontuacao for a maior, ficara salva no jogo com o seu nome;\n- Use as setas direcionais, para jogar;\n- Use a tecla ESC para fechar o jogo;\n- Use a tecla S para voltar ao Menu\n____________________________\n");
 }
 
 void desenvolvedor(){
-    printf("***** Jogo da cobrinha *****\nDesenvolvedor: Victor Tesoura Junior\nVersao: 1.0\nUniAmerica: Desafio 1 (semestre 1)\n****************************\n");
+    printf("______  Desenvolvedor  ______\nNome: Victor Tesoura Junior\nVersao: 1.0\nUniAmerica: Desafio 1 (semestre 1)\n____________________________\n");
 }
