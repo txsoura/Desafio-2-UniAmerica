@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
+#include <time.h>
+#include <ctype.h>
+#include <windows.h>
+#include <process.h>
 
 void menu(),jogar(),pontuacao(),descricao(),desenvolvedor();
-const int pontuacao;
-const char * jogador;
 
 void main(){
- menu();
+    system("cls");
+    menu();
 }
 
 void menu(){
@@ -19,22 +23,22 @@ void menu(){
        switch (opc) {
                 //opcao 1
                 case 1:
-                    // clrscr();
+                    system("cls");
                     jogar();
                     break;
                 //opcao 2
                 case 2:
-                    // clrscr();
+                    system("cls");
                     pontuacao();
                     break;
                 //opcao 3
                 case 3:
-                    // clrscr();
+                    system("cls");
                     descricao();
                     break;
                 //opcao 4
                 case 4:
-                    // clrscr();
+                    system("cls");
                     desenvolvedor();
                     break;
                 //opcao 5
@@ -49,16 +53,24 @@ void menu(){
     }while(opc!=5);
 }
 
+
 void jogar(){
 
 }
 
 void pontuacao(){
-    printf("_______  Pontuacao _______\nNome: %s\nPontos: %d",&jogador,&pontuacao,"\n____________________________\n");
+    printf("_______  Pontuacao _______\n");
+    FILE *info=fopen("pontuacao.txt","r");
+    char c;
+    do{
+       putchar(c=getc(info));
+    }while(c!=EOF);
+    
+    fclose(info);
 }
 
 void descricao(){
-    printf("_______  Instrucoes _______\n- O objetivo deste jogo, e alimentar a cobrinha o maximo possivel;\n- Se demorar alimentar, a comida mudara de lugar;\n- Cada comida, vale 1 ponto;\n- Se a sua pontuacao for a maior, ficara salva no jogo com o seu nome;\n- Use as setas direcionais, para jogar;\n- Use a tecla ESC para fechar o jogo;\n- Use a tecla S para voltar ao Menu\n____________________________\n");
+    printf("_______  Instrucoes _______\n-> O objetivo deste jogo, e alimentar a cobrinha o maximo possivel;\n-> Cada vez que alimentares a cobrinha, o seu tamanho aumentara;\n-> Se bater as paredes ou enrolar a cobrinha, perde uma vida;\n-> Tem direito a 3 vidas por jogo;\n-> Cada comida, vale 1 ponto;\n-> No final a sua pontuacao, ficara salva no jogo com o seu nome;\n-> Use as setas direcionais, para jogar;\n-> Pressione qualquer tecla durante o jogo, para pausar;\n-> Pressione qualquer tecla, para retomar ao jogo pausado;\n-> Use a tecla ESC para fechar o jogo;\n____________________________\n");
 }
 
 void desenvolvedor(){
