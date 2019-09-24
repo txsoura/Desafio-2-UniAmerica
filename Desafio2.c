@@ -11,9 +11,11 @@
 #define LEFT 75
 #define RIGHT 77
 
+//declaração variáveis
 int tamanho,curvan, tam, vida;
 char tecla;
-void gravartxt(), intervalo(long double), mover(), comer(), xy(int x, int y), xyz(int x, int y), curvar(), borda(), descer(), esquerda(), subir(), direita(), sair(), menu(), jogar(), pontuacao(), descricao(), desenvolvedor();
+//decalaração métodos
+void cobrinha(), erro(), gravartxt(), intervalo(long double), mover(), comer(), xyz(int x, int y), curvar(), borda(), descer(), esquerda(), subir(), direita(), sair(), menu(), jogar(), pontuacao(), descricao(), desenvolvedor();
 int placar(), placarx();
 
 struct coordenada
@@ -25,19 +27,24 @@ typedef struct coordenada coordenada;
 
 coordenada cabeca, curva[500], comida, corpo[30];
 
+//método principal
 void main()
 {
   system("cls");
   menu();
 }
 
+//método que imprime e valida as opções do menu
 void menu()
 {
   int opc = 0;
 
   do
   {
-    printf("***** Jogo da cobrinha *****\n1. Jogar \n2. Ver pontuacao \n3. Intrucoes \n4. Sobre o desenvolvedor \n5. Sair\n****************************\n");
+
+    printf("***** Jogo da cobrinha *****\n");
+    cobrinha();
+    printf("\n1. Jogar \n2. Ver pontuacao \n3. Intrucoes \n4. Sobre o desenvolvedor \n5. Sair\n****************************\n");
     scanf("%d", &opc);
 
     switch (opc)
@@ -67,13 +74,15 @@ void menu()
       exit(0);
       break;
     default:
-      printf("XXXXXXXXXXXXXXXXXXXXXXXXXXX\nOpcao invalida. Selecione de 1 a 5\nXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+      erro();
+      printf("\nXXXXXXXXXXXXXXXXXXXXXXX Selecione de 1 a 5 XXXXXXXXXXXXXXXXXXXXXXX\n");
       break;
     }
 
   } while (opc != 5);
 }
 
+//método que inicia o jogo
 void jogar()
 {
   char tecla;
@@ -84,12 +93,41 @@ void jogar()
   cabeca.y = 20;
   cabeca.direcao = RIGHT;
   borda();
-  comer();  //to generate food coordinates initially
-  vida = 3; //number of extra lives
+  comer();  //cria a primeira comida
+  vida = 3; //numero de vidas
   curva[0] = cabeca;
-  mover(); //initialing initial bend coordinate
+  mover(); //inicia o jogo
 }
 
+//método que imprime a cobrinha em ASCII art do ficheiro de texto
+void cobrinha()
+{
+  FILE *info = fopen("cobrinha.txt", "r");
+  char c;
+
+  do
+  {
+    putchar(c = getc(info));
+  } while (c != EOF);
+
+  fclose(info);
+}
+
+//método que imprime mensagem de erro em ASCII art do ficheiro de texto
+void erro()
+{
+  FILE *info = fopen("erro.txt", "r");
+  char c;
+
+  do
+  {
+    putchar(c = getc(info));
+  } while (c != EOF);
+
+  fclose(info);
+}
+
+//método que imprime pontuação salva no ficheiro de texto
 void pontuacao()
 {
   printf("_______  Pontuacao _______\n");
@@ -104,16 +142,19 @@ void pontuacao()
   fclose(info);
 }
 
+//método para imprimir instruções do jogo
 void descricao()
 {
   printf("_______  Instrucoes _______\n-> O objetivo deste jogo, e alimentar a cobrinha o maximo possivel;\n-> Cada vez que alimentares a cobrinha, o seu tamanho aumentara;\n-> Se bater as paredes ou enrolar a cobrinha, perde uma vida;\n-> Tem direito a 3 vidas por jogo;\n-> Cada comida, vale 1 ponto;\n-> No final a sua pontuacao, ficara salva no jogo com o seu nome;\n-> Use as setas direcionais, para jogar;\n-> Pressione qualquer tecla durante o jogo, para pausar;\n-> Pressione qualquer tecla, para retomar ao jogo pausado;\n-> Use a tecla ESC para fechar o jogo;\n____________________________\n");
 }
 
+//método para imprimir dados do desenvolvedor
 void desenvolvedor()
 {
   printf("______  Desenvolvedor  ______\nNome: Victor Tesoura Junior\nVersao: 1.0\nUniAmerica: Desafio 2 (semestre 1)\n____________________________\n");
 }
 
+//método que movimenta a cobrinha em função de coordenadas
 void mover()
 {
   int a, i;
@@ -208,14 +249,7 @@ void mover()
   }
 }
 
-void xy(int x, int y)
-{
-  COORD coord;
-  coord.X = x;
-  coord.Y = y;
-  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
-
+//método responsável por imprimir a parte gráfica do jogo
 void xyz(int x, int y)
 {
   HANDLE a;
@@ -226,6 +260,8 @@ void xyz(int x, int y)
   a = GetStdHandle(STD_OUTPUT_HANDLE);
   SetConsoleCursorPosition(a, b);
 }
+
+//método para descer a direção da cobrinha
 void descer()
 {
   int i;
@@ -257,6 +293,7 @@ void descer()
   }
 }
 
+//método que define a taxa de atualização (movimento da cobrinha)
 void intervalo(long double k)
 {
   placar();
@@ -266,15 +303,16 @@ void intervalo(long double k)
     ;
 }
 
+//método que verifica as vidas
 void sair()
 {
   int i, verificar = 0;
 
-  for (i = 4; i < tamanho; i++) //starts with 4 because it needs minimum 4 element to touch its own body
+  for (i = 4; i < tamanho; i++) //inicia com 4, pois só assim é que a cobrinha poderá enrolar-se
   {
     if (corpo[0].x == corpo[i].x && corpo[0].y == corpo[i].y)
     {
-      verificar++; //check's value increases as the coordinates of head is equal to any other body coordinate
+      verificar++; //verifica se a coordenada da cabeça é a mesma que do corpo
     }
 
     if (i == tamanho || verificar != 0)
@@ -305,6 +343,7 @@ void sair()
   }
 }
 
+//método que cria a comida
 void comer()
 {
   if (cabeca.x == comida.x && cabeca.y == comida.y)
@@ -327,7 +366,7 @@ void comer()
       comida.y += 11;
     }
   }
-  else if (comida.x == 0) /*to create food for the first time coz global variable are initialized with 0*/
+  else if (comida.x == 0) /*cria a primeira comida do jogo*/
   {
     comida.x = rand() % 70;
 
@@ -345,6 +384,7 @@ void comer()
   }
 }
 
+//método para mudar a direção da cobrinha a esquerda
 void esquerda()
 {
   int i;
@@ -376,6 +416,7 @@ void esquerda()
   }
 }
 
+//método para mudar a direção da cobrinha a direita
 void direita()
 {
   int i;
@@ -407,6 +448,7 @@ void direita()
   }
 }
 
+//método para curvar a direção da cobrinha
 void curvar()
 {
   int i, j, diff;
@@ -490,11 +532,12 @@ void curvar()
   }
 }
 
+//método que imprime o retângulo
 void borda()
 {
   system("cls");
   int i;
-  xyz(comida.x, comida.y); /*displaying food*/
+  xyz(comida.x, comida.y); /*imprime a comida*/
   printf("C");
 
   for (i = 10; i < 71; i++)
@@ -514,6 +557,7 @@ void borda()
   }
 }
 
+//método que grava a pontuação no ficheiro de texto
 void gravartxt()
 {
   char nome[20], nmaiusculo[20], cha, c;
@@ -525,9 +569,10 @@ void gravartxt()
   system("cls");
   printf("Digite o seu nome\n");
   scanf("%[^\n]", nome);
-  //************************
+  
   for (j = 0; nome[j] != '\0'; j++)
-  { //to convert the first letter after space to capital
+  { 
+    //converter a primeira letra depois do espaço a maiuscula
     nmaiusculo[0] = toupper(nome[0]);
 
     if (nome[j - 1] == ' ')
@@ -542,21 +587,21 @@ void gravartxt()
   }
 
   nmaiusculo[j] = '\0';
-  //*****************************
-  //sdfprintf(info,"\t\t\tPlayers List\n");
+  //grava o nome do jogador
   fprintf(info, "Nome: %s\n", nmaiusculo);
-  //for date and time
+  //grava a data e hora
   time_t mytime;
   mytime = time(NULL);
   fprintf(info, "Data: %s", ctime(&mytime));
-  //**************************
-  fprintf(info, "Pontos: %d\n", px = placarx()); //call score to display score
+  //grava os pontos do placar
+  fprintf(info, "Pontos: %d\n", px = placarx()); 
   for(i=0;i<=50;i++)
    fprintf(info,"%c",'_');
    fprintf(info,"\n");
    fclose(info);
 }
 
+//método que imprime o placar do jogo
 int placar()
 {
   int placa;
@@ -571,6 +616,7 @@ int placar()
   return placa;
 }
 
+//método que atualiza o placar do jogo
 int placarx()
 {
   int placax = placar();
@@ -580,6 +626,7 @@ int placarx()
   return placax;
 }
 
+//método para subir a direção da cobrinha
 void subir()
 {
   int i;
