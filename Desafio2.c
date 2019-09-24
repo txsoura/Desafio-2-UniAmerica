@@ -41,8 +41,6 @@ void menu()
 
   do
   {
-
-    printf("***** Jogo da cobrinha *****\n");
     cobrinha();
     printf("\n1. Jogar \n2. Ver pontuacao \n3. Intrucoes \n4. Sobre o desenvolvedor \n5. Sair\n****************************\n");
     scanf("%d", &opc);
