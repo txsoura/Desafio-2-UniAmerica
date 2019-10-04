@@ -12,7 +12,7 @@
 #define RIGHT 77
 
 //declaração variáveis
-int tamanho,curvan, tam, vida;
+int tamanho, curvan, tam, vida;
 char tecla;
 //decalaração métodos
 void cobrinha(), erro(), gravartxt(), intervalo(long double), mover(), comer(), xyz(int x, int y), curvar(), borda(), descer(), esquerda(), subir(), direita(), sair(), menu(), jogar(), pontuacao(), descricao(), desenvolvedor();
@@ -567,9 +567,9 @@ void gravartxt()
   system("cls");
   printf("Digite o seu nome\n");
   scanf("%[^\n]", nome);
-  
+
   for (j = 0; nome[j] != '\0'; j++)
-  { 
+  {
     //converter a primeira letra depois do espaço a maiuscula
     nmaiusculo[0] = toupper(nome[0]);
 
@@ -592,11 +592,11 @@ void gravartxt()
   mytime = time(NULL);
   fprintf(info, "Data: %s", ctime(&mytime));
   //grava os pontos do placar
-  fprintf(info, "Pontos: %d\n", px = placarx()); 
-  for(i=0;i<=50;i++)
-   fprintf(info,"%c",'_');
-   fprintf(info,"\n");
-   fclose(info);
+  fprintf(info, "Pontos: %d\n", px = placarx());
+  for (i = 0; i <= 50; i++)
+    fprintf(info, "%c", '_');
+  fprintf(info, "\n");
+  fclose(info);
 }
 
 //método que imprime o placar do jogo
